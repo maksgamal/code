@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import TanstackClientProvider from '@/components/providers/tanstack-client-provider'
+import ClerkClientProvider from '@/components/providers/clerk-client-provider'
+import { SupabaseProvider } from '@/utils/supabase/context'
+import { ClerkProvider } from '@clerk/nextjs'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -15,8 +18,8 @@ const geistMono = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'CodeGuide Starter Pro',
-  description: 'Starter kit from codeguide.dev',
+  title: 'LeadFuel - B2B Lead Generation Platform',
+  description: 'Advanced lead generation and prospecting platform for sales teams, recruiters, and growth agencies.',
 }
 
 export default function RootLayout({
@@ -25,10 +28,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <TanstackClientProvider>{children}</TanstackClientProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <TanstackClientProvider>
+            <SupabaseProvider>
+              {children}
+            </SupabaseProvider>
+          </TanstackClientProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
