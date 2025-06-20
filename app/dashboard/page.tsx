@@ -5,16 +5,20 @@ import { CreditBalance } from '@/components/dashboard/credit-balance'
 import { RecentActivity } from '@/components/dashboard/recent-activity'
 import { UsageCharts } from '@/components/dashboard/usage-charts'
 import { QuickActions } from '@/components/dashboard/quick-actions'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useUserData } from '@/hooks/use-user-data'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Dashboard() {
-  const { user } = useUser()
+  const { user: clerkUser } = useUser()
+  const { data: userData, isLoading } = useUserData()
+
+  const displayName = userData?.first_name || clerkUser?.firstName || 'User'
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">
-          Welcome back, {user?.firstName || 'User'}!
+          Welcome back, {displayName}!
         </h1>
         <p className="text-gray-600 mt-2">
           Here's what's happening with your lead generation today.
