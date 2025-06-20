@@ -1,0 +1,6 @@
+# Example structure
+documentation/
+├── project_requirements_document.md             
+├── app_flow_document.md
+├── frontend_guideline_document.md
+└── backend_structure_document.md
